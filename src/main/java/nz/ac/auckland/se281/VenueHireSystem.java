@@ -15,10 +15,47 @@ public class VenueHireSystem {
     if(venues.isEmpty()){
       MessageCli.NO_VENUES.printMessage();
     }
+    
   }
 
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
+    // Check if venueName is empty
+    if (venueName.trim().isEmpty()) {
+      MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
+      return;
+    } // Check venueCode is unique
+    for (Venue venue : venues) {
+      if (venue.getVenueCode().equals(venueCode)) {
+        MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, venue.getVenueName());
+        return;
+      }
+    } // check if capacityInput is a number and positive
+    try {
+      int tempnum = Integer.parseInt(capacityInput);
+      if (tempnum <= 0){
+        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity"," positive");
+        return;
+      }
+    } catch (Exception e) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", "");
+      return;
+    } // check if hireFeeInput is a number and positive
+    try {
+      int tempnum = Integer.parseInt(hireFeeInput);
+      if (tempnum <= 0){
+        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee"," positive");
+        return;
+      }
+    } catch (Exception e) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
+      return;
+    }    
+
+    // Create venue class instance if input arguments pass all the checks
+    Venue venue = new Venue(venueName, venueCode, capacityInput, hireFeeInput);
+    // Add to venues arraylist
+    venues.add(venue);
     
   }
 
