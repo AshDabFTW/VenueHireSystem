@@ -1,46 +1,56 @@
 package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
-
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 
 public class VenueHireSystem {
 
-  //initialising venues arraylist
+  // initialising venues arraylist
   private ArrayList<Venue> venues = new ArrayList<Venue>();
 
   public VenueHireSystem() {}
 
   public void printVenues() {
     // checking if no venues have been made
-    if(venues.isEmpty()){
+    if (venues.isEmpty()) {
       MessageCli.NO_VENUES.printMessage();
       return;
     } // check if there is only one venue and print accordingly
-    else if(venues.size() == 1){
+    else if (venues.size() == 1) {
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
-      for (Venue venue : venues){
-        MessageCli.VENUE_ENTRY.printMessage(venue.getVenueName(), venue.getVenueCode(), venue.getVenueCapacity(), venue.getVenueHireFee());
+      for (Venue venue : venues) {
+        MessageCli.VENUE_ENTRY.printMessage(
+            venue.getVenueName(),
+            venue.getVenueCode(),
+            venue.getVenueCapacity(),
+            venue.getVenueHireFee());
       }
       return;
     } // check if there is below 10 venues and print messages
-    else if (venues.size() < 10){
+    else if (venues.size() < 10) {
       String[] ones = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
-      MessageCli.NUMBER_VENUES.printMessage("are", ones[venues.size()] ,"s");
-      for (Venue venue : venues){
-        MessageCli.VENUE_ENTRY.printMessage(venue.getVenueName(), venue.getVenueCode(), venue.getVenueCapacity(), venue.getVenueHireFee());
+      MessageCli.NUMBER_VENUES.printMessage("are", ones[venues.size()], "s");
+      for (Venue venue : venues) {
+        MessageCli.VENUE_ENTRY.printMessage(
+            venue.getVenueName(),
+            venue.getVenueCode(),
+            venue.getVenueCapacity(),
+            venue.getVenueHireFee());
       }
       return;
     } // all other cases (any above 10 venues) are print accordingly
-    else{
-      MessageCli.NUMBER_VENUES.printMessage("are", Integer.toString(venues.size()) ,"s");
-      for (Venue venue : venues){
-        MessageCli.VENUE_ENTRY.printMessage(venue.getVenueName(), venue.getVenueCode(), venue.getVenueCapacity(), venue.getVenueHireFee());
+    else {
+      MessageCli.NUMBER_VENUES.printMessage("are", Integer.toString(venues.size()), "s");
+      for (Venue venue : venues) {
+        MessageCli.VENUE_ENTRY.printMessage(
+            venue.getVenueName(),
+            venue.getVenueCode(),
+            venue.getVenueCapacity(),
+            venue.getVenueHireFee());
       }
       return;
     }
-
   }
 
   public void createVenue(
@@ -57,9 +67,9 @@ public class VenueHireSystem {
       }
     } // check if capacityInput is a number and positive
     try {
-      int tempnum = Integer.parseInt(capacityInput);
-      if (tempnum <= 0){
-        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity"," positive");
+      int tempNum = Integer.parseInt(capacityInput);
+      if (tempNum <= 0) {
+        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", " positive");
         return;
       }
     } catch (Exception e) {
@@ -67,15 +77,15 @@ public class VenueHireSystem {
       return;
     } // check if hireFeeInput is a number and positive
     try {
-      int tempnum = Integer.parseInt(hireFeeInput);
-      if (tempnum <= 0){
-        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee"," positive");
+      int tempNum = Integer.parseInt(hireFeeInput);
+      if (tempNum <= 0) {
+        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", " positive");
         return;
       }
     } catch (Exception e) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
       return;
-    }    
+    }
 
     // Create venue class instance if input arguments pass all the checks
     Venue venue = new Venue(venueName, venueCode, capacityInput, hireFeeInput);
