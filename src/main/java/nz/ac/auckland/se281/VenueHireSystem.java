@@ -18,7 +18,7 @@ public class VenueHireSystem {
       MessageCli.NO_VENUES.printMessage();
       return;
     } else if(venues.size() == 1){
-
+      MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
     }
 
   }
