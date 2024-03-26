@@ -19,17 +19,16 @@ public class VenueHireSystem {
     } // check if there is only one venue and print accordingly
     else if (venues.size() == 1) {
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
-      for (Venue venue : venues) {
-        MessageCli.VENUE_ENTRY.printMessage(
-            venue.getVenueName(),
-            venue.getVenueCode(),
-            venue.getVenueCapacity(),
-            venue.getVenueHireFee());
-      }
+      Venue venue = venues.get(0);
+      MessageCli.VENUE_ENTRY.printMessage(
+          venue.getVenueName(),
+          venue.getVenueCode(),
+          venue.getVenueCapacity(),
+          venue.getVenueHireFee());
       return;
     } // check if there is below 10 venues and print messages
     else if (venues.size() < 10) {
-      String[] ones = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
+      String[] ones = {"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
       MessageCli.NUMBER_VENUES.printMessage("are", ones[venues.size()], "s");
       for (Venue venue : venues) {
         MessageCli.VENUE_ENTRY.printMessage(
