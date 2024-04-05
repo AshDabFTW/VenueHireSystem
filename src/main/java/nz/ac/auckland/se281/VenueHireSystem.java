@@ -101,17 +101,19 @@ public class VenueHireSystem {
   }
 
   public void printSystemDate() {
-    if (systemDate != null){
+    if (systemDate != null) {
       MessageCli.CURRENT_DATE.printMessage(systemDate);
-    } 
-    else{
+    } else {
       MessageCli.CURRENT_DATE.printMessage("not set");
     }
   }
 
   public void makeBooking(String[] options) {
-    if(systemDate == null){
+    if (systemDate == null) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
+    }
+    if (venues.isEmpty()) {
+      MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
     }
   }
 
