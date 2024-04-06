@@ -8,6 +8,7 @@ public class VenueHireSystem {
 
   // initialising venues arraylist
   private ArrayList<Venue> venues = new ArrayList<Venue>();
+  private ArrayList<Booking> bookings = new ArrayList<Booking>();
   private String systemDate;
 
   public VenueHireSystem() {}
@@ -128,13 +129,13 @@ public class VenueHireSystem {
     // checks if date is in the past
     String[] systemDateParts = systemDate.split("/");
     String[] bookingDateParts = bookingDate.split("/");
-    if (Integer.parseInt(bookingDateParts[2]) < Integer.parseInt(systemDateParts[2])){
+    if (Integer.parseInt(bookingDateParts[2]) < Integer.parseInt(systemDateParts[2])) {
       MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate, systemDate);
       return;
-    } else if (Integer.parseInt(bookingDateParts[1]) < Integer.parseInt(systemDateParts[1])){
+    } else if (Integer.parseInt(bookingDateParts[1]) < Integer.parseInt(systemDateParts[1])) {
       MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate, systemDate);
       return;
-    } else if (Integer.parseInt(bookingDateParts[0]) < Integer.parseInt(systemDateParts[0])){
+    } else if (Integer.parseInt(bookingDateParts[0]) < Integer.parseInt(systemDateParts[0])) {
       MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate, systemDate);
       return;
     }
@@ -142,14 +143,31 @@ public class VenueHireSystem {
     // checks if there is a venue with the same venue code
     int count = 0;
     for (Venue venue : venues) {
-      if (venue.getVenueCode().equals(bookingVenueCode)){
+      if (venue.getVenueCode().equals(bookingVenueCode)) {
         count++;
       }
     }
-    if (count == 0){
+    if (count == 0) {
       MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(bookingVenueCode);
       return;
     }
+
+    // check if booking has already been made on the same day
+    for (Booking booking : bookings) {
+      if (booking.getBookingVenueCode().equals(bookingVenueCode)
+          && booking.getBookingDate().equals(bookingDate)) {
+        MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(
+            booking.getBookingVenueName(), bookingDate);
+        return;
+      }
+    }
+
+    // adjust attendece if needed
+
+    // Has passed all the checks so will check if attendence values need to change
+
+    // Makes the booking and adds to the booking arraylist
+
   }
 
   public void printBookings(String venueCode) {
