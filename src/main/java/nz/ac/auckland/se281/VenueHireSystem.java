@@ -163,6 +163,20 @@ public class VenueHireSystem {
     }
 
     // Has passed all the checks so will check if attendence values need to change
+    for (Venue venue : venues) {
+      if (venue.getVenueCode().equals(bookingVenueCode)) {
+        if (Integer.parseInt(bookingAttendees) < Integer.parseInt(venue.getVenueCapacity()) / 4) {
+          String newBookingAttendees =
+              String.valueOf(Integer.parseInt(venue.getVenueCapacity()) / 4);
+          MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+              bookingAttendees, newBookingAttendees, venue.getVenueCapacity());
+          bookingAttendees = newBookingAttendees;
+        } else if (Integer.parseInt(bookingAttendees) > Integer.parseInt(venue.getVenueCapacity())){
+          MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(bookingAttendees, venue.getVenueCapacity(),venue.getVenueCapacity());
+          bookingAttendees = venue.getVenueCapacity();
+        }
+      }
+    }
 
     // Makes the booking and adds to the booking arraylist
     String bookingVenueName = "";
