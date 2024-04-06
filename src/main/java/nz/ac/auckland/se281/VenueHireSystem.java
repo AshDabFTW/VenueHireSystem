@@ -162,12 +162,27 @@ public class VenueHireSystem {
       }
     }
 
-    // adjust attendece if needed
-
     // Has passed all the checks so will check if attendence values need to change
 
     // Makes the booking and adds to the booking arraylist
-
+    String bookingVenueName = "";
+    for (Venue venue : venues) {
+      if (venue.getVenueCode().equals(bookingVenueCode)) {
+        bookingVenueName = venue.getVenueName();
+      }
+    }
+    String bookingReference = BookingReferenceGenerator.generateBookingReference();
+    Booking booking =
+        new Booking(
+            bookingVenueCode,
+            bookingVenueName,
+            bookingDate,
+            bookingEmail,
+            bookingAttendees,
+            bookingReference);
+    MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
+        bookingReference, bookingVenueName, bookingDate, bookingAttendees);
+    bookings.add(booking);
   }
 
   public void printBookings(String venueCode) {
