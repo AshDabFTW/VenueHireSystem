@@ -109,11 +109,46 @@ public class VenueHireSystem {
   }
 
   public void makeBooking(String[] options) {
+    // check if systemDate has been set
     if (systemDate == null) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
+      return;
     }
+    // check if venue has been made
     if (venues.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
+      return;
+    }
+    // assigning variable names to input string array for understandability
+    String bookingVenueCode = options[0];
+    String bookingDate = options[1];
+    String bookingEmail = options[2];
+    String bookingAttendees = options[3];
+
+    // checks if date is in the past
+    String[] systemDateParts = systemDate.split("/");
+    String[] bookingDateParts = bookingDate.split("/");
+    if (Integer.parseInt(bookingDateParts[2]) < Integer.parseInt(systemDateParts[2])){
+      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate, systemDate);
+      return;
+    } else if (Integer.parseInt(bookingDateParts[1]) < Integer.parseInt(systemDateParts[1])){
+      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate, systemDate);
+      return;
+    } else if (Integer.parseInt(bookingDateParts[0]) < Integer.parseInt(systemDateParts[0])){
+      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate, systemDate);
+      return;
+    }
+
+    // checks if there is a venue with the same venue code
+    int count = 0;
+    for (Venue venue : venues) {
+      if (venue.getVenueCode().equals(bookingVenueCode)){
+        count++;
+      }
+    }
+    if (count == 0){
+      MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(bookingVenueCode);
+      return;
     }
   }
 
