@@ -255,7 +255,21 @@ public class VenueHireSystem {
   }
 
   public void printBookings(String venueCode) {
-    // TODO implement this method
+    int count = 0;
+    for (Venue venue : venues) {
+      if (venue.getVenueCode().equals(venueCode)) {
+        MessageCli.PRINT_BOOKINGS_HEADER.printMessage(venue.getVenueName());
+        count++;
+      }
+    }
+    if (count == 0) {
+      MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
+      return;
+    }
+
+    for (Booking booking : bookings) {
+      //
+    }
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
