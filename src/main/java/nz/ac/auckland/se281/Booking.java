@@ -34,4 +34,8 @@ public class Booking {
   public String getBookingDate() {
     return bookingDate;
   }
+
+  public String getBookingReference() {
+    return bookingReference;
+  }
 }
