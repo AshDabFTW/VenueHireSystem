@@ -20,35 +20,88 @@ public class VenueHireSystem {
       return;
     } // check if there is only one venue and print accordingly
     else if (venues.size() == 1) {
+      String availableDate = systemDate;
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
       Venue venue = venues.get(0);
+      boolean iterateAgain = true;
+      while (iterateAgain) {
+        iterateAgain = false;
+        for (int i = 0; i < bookings.size(); i++) {
+          Booking booking = bookings.get(i);
+          if (booking.getBookingDate().equals(availableDate)) {
+            // available date add 1 and loop back through
+            String[] availableDateParts = availableDate.split("/");
+            int dayVal = Integer.parseInt(availableDateParts[0]) + 1;
+            availableDate =
+                String.format("%02d/%s/%s", dayVal, availableDateParts[1], availableDateParts[2]);
+            iterateAgain = true;
+          }
+        }
+      }
       MessageCli.VENUE_ENTRY.printMessage(
           venue.getVenueName(),
           venue.getVenueCode(),
           venue.getVenueCapacity(),
-          venue.getVenueHireFee());
+          venue.getVenueHireFee(),
+          availableDate);
       return;
     } // check if there is below 10 venues and print messages
     else if (venues.size() < 10) {
       String[] ones = {"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
       MessageCli.NUMBER_VENUES.printMessage("are", ones[venues.size()], "s");
       for (Venue venue : venues) {
+        String availableDate = systemDate;
+        boolean iterateAgain = true;
+        while (iterateAgain) {
+          iterateAgain = false;
+          for (int i = 0; i < bookings.size(); i++) {
+            Booking booking = bookings.get(i);
+            if (booking.getBookingDate().equals(availableDate)
+                && booking.getBookingVenueCode().equals(venue.getVenueCode())) {
+              // available date add 1 and loop back through
+              String[] availableDateParts = availableDate.split("/");
+              int dayVal = Integer.parseInt(availableDateParts[0]) + 1;
+              availableDate =
+                  String.format("%02d/%s/%s", dayVal, availableDateParts[1], availableDateParts[2]);
+              iterateAgain = true;
+            }
+          }
+        }
         MessageCli.VENUE_ENTRY.printMessage(
             venue.getVenueName(),
             venue.getVenueCode(),
             venue.getVenueCapacity(),
-            venue.getVenueHireFee());
+            venue.getVenueHireFee(),
+            availableDate);
       }
       return;
     } // all other cases (any above 10 venues) are print accordingly
     else {
       MessageCli.NUMBER_VENUES.printMessage("are", Integer.toString(venues.size()), "s");
       for (Venue venue : venues) {
+        String availableDate = systemDate;
+        boolean iterateAgain = true;
+        while (iterateAgain) {
+          iterateAgain = false;
+          for (int i = 0; i < bookings.size(); i++) {
+            Booking booking = bookings.get(i);
+            if (booking.getBookingDate().equals(availableDate)
+                && booking.getBookingVenueCode().equals(venue.getVenueCode())) {
+              // available date add 1 and loop back through
+              String[] availableDateParts = availableDate.split("/");
+              int dayVal = Integer.parseInt(availableDateParts[0]) + 1;
+              availableDate =
+                  String.format("%02d/%s/%s", dayVal, availableDateParts[1], availableDateParts[2]);
+              iterateAgain = true;
+            }
+          }
+        }
         MessageCli.VENUE_ENTRY.printMessage(
             venue.getVenueName(),
             venue.getVenueCode(),
             venue.getVenueCapacity(),
-            venue.getVenueHireFee());
+            venue.getVenueHireFee(),
+            availableDate);
       }
       return;
     }
@@ -171,8 +224,10 @@ public class VenueHireSystem {
           MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
               bookingAttendees, newBookingAttendees, venue.getVenueCapacity());
           bookingAttendees = newBookingAttendees;
-        } else if (Integer.parseInt(bookingAttendees) > Integer.parseInt(venue.getVenueCapacity())){
-          MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(bookingAttendees, venue.getVenueCapacity(),venue.getVenueCapacity());
+        } else if (Integer.parseInt(bookingAttendees)
+            > Integer.parseInt(venue.getVenueCapacity())) {
+          MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+              bookingAttendees, venue.getVenueCapacity(), venue.getVenueCapacity());
           bookingAttendees = venue.getVenueCapacity();
         }
       }
