@@ -20,24 +20,9 @@ public class VenueHireSystem {
       return;
     } // check if there is only one venue and print accordingly
     else if (venues.size() == 1) {
-      String availableDate = systemDate;
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
       Venue venue = venues.get(0);
-      boolean iterateAgain = true;
-      while (iterateAgain) {
-        iterateAgain = false;
-        for (int i = 0; i < bookings.size(); i++) {
-          Booking booking = bookings.get(i);
-          if (booking.getBookingDate().equals(availableDate)) {
-            // available date add 1 and loop back through
-            String[] availableDateParts = availableDate.split("/");
-            int dayVal = Integer.parseInt(availableDateParts[0]) + 1;
-            availableDate =
-                String.format("%02d/%s/%s", dayVal, availableDateParts[1], availableDateParts[2]);
-            iterateAgain = true;
-          }
-        }
-      }
+      String availableDate = findAvailableDate(venue);
       MessageCli.VENUE_ENTRY.printMessage(
           venue.getVenueName(),
           venue.getVenueCode(),
@@ -50,23 +35,7 @@ public class VenueHireSystem {
       String[] ones = {"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
       MessageCli.NUMBER_VENUES.printMessage("are", ones[venues.size()], "s");
       for (Venue venue : venues) {
-        String availableDate = systemDate;
-        boolean iterateAgain = true;
-        while (iterateAgain) {
-          iterateAgain = false;
-          for (int i = 0; i < bookings.size(); i++) {
-            Booking booking = bookings.get(i);
-            if (booking.getBookingDate().equals(availableDate)
-                && booking.getBookingVenueCode().equals(venue.getVenueCode())) {
-              // available date add 1 and loop back through
-              String[] availableDateParts = availableDate.split("/");
-              int dayVal = Integer.parseInt(availableDateParts[0]) + 1;
-              availableDate =
-                  String.format("%02d/%s/%s", dayVal, availableDateParts[1], availableDateParts[2]);
-              iterateAgain = true;
-            }
-          }
-        }
+        String availableDate = findAvailableDate(venue);
         MessageCli.VENUE_ENTRY.printMessage(
             venue.getVenueName(),
             venue.getVenueCode(),
@@ -79,23 +48,7 @@ public class VenueHireSystem {
     else {
       MessageCli.NUMBER_VENUES.printMessage("are", Integer.toString(venues.size()), "s");
       for (Venue venue : venues) {
-        String availableDate = systemDate;
-        boolean iterateAgain = true;
-        while (iterateAgain) {
-          iterateAgain = false;
-          for (int i = 0; i < bookings.size(); i++) {
-            Booking booking = bookings.get(i);
-            if (booking.getBookingDate().equals(availableDate)
-                && booking.getBookingVenueCode().equals(venue.getVenueCode())) {
-              // available date add 1 and loop back through
-              String[] availableDateParts = availableDate.split("/");
-              int dayVal = Integer.parseInt(availableDateParts[0]) + 1;
-              availableDate =
-                  String.format("%02d/%s/%s", dayVal, availableDateParts[1], availableDateParts[2]);
-              iterateAgain = true;
-            }
-          }
-        }
+        String availableDate = findAvailableDate(venue);
         MessageCli.VENUE_ENTRY.printMessage(
             venue.getVenueName(),
             venue.getVenueCode(),
@@ -105,6 +58,31 @@ public class VenueHireSystem {
       }
       return;
     }
+  }
+
+  public String findAvailableDate(Venue venue) {
+    // this method finds the available date for a given venue
+    if (systemDate == null) {
+      return "";
+    }
+    String availableDate = systemDate;
+    boolean iterateAgain = true;
+    while (iterateAgain) {
+      iterateAgain = false;
+      for (Booking booking : bookings) {
+        if (booking.getBookingDate().equals(availableDate)
+            && booking.getBookingVenueCode().equals(venue.getVenueCode())) {
+          // if the venue is found in the booking list and is already booked on that day 1 is added
+          // the the date and looped back through
+          String[] availableDateParts = availableDate.split("/");
+          int dayVal = Integer.parseInt(availableDateParts[0]) + 1;
+          availableDate =
+              String.format("%02d/%s/%s", dayVal, availableDateParts[1], availableDateParts[2]);
+          iterateAgain = true;
+        }
+      }
+    }
+    return availableDate;
   }
 
   public void createVenue(
@@ -150,11 +128,13 @@ public class VenueHireSystem {
   }
 
   public void setSystemDate(String dateInput) {
+    // Sets the system date and prints
     systemDate = dateInput;
     MessageCli.DATE_SET.printMessage(systemDate);
   }
 
   public void printSystemDate() {
+    // Checks if there is a system date and prints
     if (systemDate != null) {
       MessageCli.CURRENT_DATE.printMessage(systemDate);
     } else {
@@ -255,8 +235,9 @@ public class VenueHireSystem {
   }
 
   public void printBookings(String venueCode) {
+    // check is venueCode input is valid and prints header
     int count = 0;
-    String venueName = ""; 
+    String venueName = "";
     for (Venue venue : venues) {
       if (venue.getVenueCode().equals(venueCode)) {
         MessageCli.PRINT_BOOKINGS_HEADER.printMessage(venue.getVenueName());
@@ -269,14 +250,16 @@ public class VenueHireSystem {
       return;
     }
 
+    // prints all bookings related to venueCode
     count = 0;
     for (Booking booking : bookings) {
-      if (booking.getBookingVenueCode().equals(venueCode)){
-        MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(booking.getBookingReference(), booking.getBookingDate());
-        count ++;
+      if (booking.getBookingVenueCode().equals(venueCode)) {
+        MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(
+            booking.getBookingReference(), booking.getBookingDate());
+        count++;
       }
     }
-    if (count == 0){
+    if (count == 0) {
       MessageCli.PRINT_BOOKINGS_NONE.printMessage(venueName);
     }
   }
