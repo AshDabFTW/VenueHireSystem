@@ -7,6 +7,7 @@ public class Booking {
   private String bookingEmail;
   private String bookingAttendees;
   private String bookingReference;
+  private String dateMade;
 
   // Service fields
   private Catering cateringService = null;
@@ -19,13 +20,15 @@ public class Booking {
       String bookingDate,
       String bookingEmail,
       String bookingAttendees,
-      String bookingReference) {
+      String bookingReference,
+      String dateMade) {
     this.bookingVenueCode = bookingVenueCode;
     this.bookingVenueName = bookingVenueName;
     this.bookingDate = bookingDate;
     this.bookingEmail = bookingEmail;
     this.bookingAttendees = bookingAttendees;
     this.bookingReference = bookingReference;
+    this.dateMade = dateMade;
   }
 
   public String getBookingVenueCode() {
@@ -44,6 +47,10 @@ public class Booking {
     return bookingReference;
   }
 
+  public String getBookingEmail() {
+    return bookingEmail;
+  }
+
   public void setCatering(Catering catering) {
     cateringService = catering;
   }
@@ -54,6 +61,14 @@ public class Booking {
 
   public void setMusic(Music music){
     musicService = music;
+  }
+
+  public String getDateMade() {
+    return dateMade;
+  }
+
+  public String getBookingAttendees() {
+    return bookingAttendees;
   }
 
 }

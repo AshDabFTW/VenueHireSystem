@@ -228,7 +228,8 @@ public class VenueHireSystem {
             bookingDate,
             bookingEmail,
             bookingAttendees,
-            bookingReference);
+            bookingReference,
+            systemDate);
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
         bookingReference, bookingVenueName, bookingDate, bookingAttendees);
     bookings.add(booking);
@@ -266,11 +267,11 @@ public class VenueHireSystem {
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
     Booking booking = getBooking(bookingReference);
-    if (booking == null){
+    if (booking == null) {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
       return;
     }
-    
+
     int costPerPerson = cateringType.getCostPerPerson();
     String name = cateringType.getName();
 
@@ -281,7 +282,7 @@ public class VenueHireSystem {
 
   public void addServiceMusic(String bookingReference) {
     Booking booking = getBooking(bookingReference);
-    if (booking == null){
+    if (booking == null) {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
       return;
     }
@@ -293,7 +294,7 @@ public class VenueHireSystem {
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
     Booking booking = getBooking(bookingReference);
-    if (booking == null){
+    if (booking == null) {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Floral", bookingReference);
       return;
     }
@@ -306,9 +307,9 @@ public class VenueHireSystem {
     MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Floral (" + name + ")", bookingReference);
   }
 
-  public Booking getBooking(String bookingReference){
-    for (Booking booking : bookings){
-      if (booking.getBookingReference().equals(bookingReference)){
+  public Booking getBooking(String bookingReference) {
+    for (Booking booking : bookings) {
+      if (booking.getBookingReference().equals(bookingReference)) {
         return booking;
       }
     }
@@ -316,8 +317,18 @@ public class VenueHireSystem {
   }
 
   public void viewInvoice(String bookingReference) {
-    if (getBooking(bookingReference) == null){
+    Booking booking = getBooking(bookingReference);
+    if (booking == null) {
       MessageCli.VIEW_INVOICE_BOOKING_NOT_FOUND.printMessage(bookingReference);
+      return;
     }
+
+    MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage(
+        bookingReference,
+        booking.getBookingEmail(),
+        booking.getDateMade(),
+        booking.getBookingDate(),
+        booking.getBookingAttendees(),
+        booking.getBookingVenueName());
   }
 }
