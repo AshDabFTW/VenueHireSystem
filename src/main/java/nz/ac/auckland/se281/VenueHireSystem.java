@@ -265,15 +265,38 @@ public class VenueHireSystem {
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
-    // TODO implement this method
+    if (isBookingValid(bookingReference) == false){
+      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
+      return;
+    }
+    
   }
 
   public void addServiceMusic(String bookingReference) {
-    // TODO implement this method
+    if (isBookingValid(bookingReference) == false){
+      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
+      return;
+    }
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
-    // TODO implement this method
+    if (isBookingValid(bookingReference) == false){
+      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Floral", bookingReference);
+      return;
+    }
+  }
+
+  public boolean isBookingValid(String bookingReference){
+    int count = 0;
+    for (Booking booking : bookings){
+      if (booking.getBookingReference().equals(bookingReference)){
+        count ++;
+      }
+    }
+    if (count == 0){
+      return false;
+    }
+    return true;
   }
 
   public void viewInvoice(String bookingReference) {
