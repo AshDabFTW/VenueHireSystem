@@ -8,6 +8,9 @@ public class Booking {
   private String bookingAttendees;
   private String bookingReference;
 
+  // Service fields
+  private Catering catering;
+
   public Booking(
       String bookingVenueCode,
       String bookingVenueName,
@@ -37,5 +40,9 @@ public class Booking {
 
   public String getBookingReference() {
     return bookingReference;
+  }
+
+  public void setCatering(Catering catering) {
+    this.catering = catering;
   }
 }

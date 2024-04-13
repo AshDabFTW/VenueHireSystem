@@ -265,38 +265,43 @@ public class VenueHireSystem {
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
-    if (isBookingValid(bookingReference) == false){
+    Booking booking = getBooking(bookingReference);
+    if (booking == null){
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
       return;
     }
     
+    int costPerPerson = cateringType.getCostPerPerson();
+    String name = cateringType.getName();
+
+    Catering catering = new Catering(costPerPerson, name);
+    booking.setCatering(catering);
+    MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Catering (" + name + ")", bookingReference);
   }
 
   public void addServiceMusic(String bookingReference) {
-    if (isBookingValid(bookingReference) == false){
+    Booking booking = getBooking(bookingReference);
+    if (booking == null){
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
       return;
     }
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
-    if (isBookingValid(bookingReference) == false){
+    Booking booking = getBooking(bookingReference);
+    if (booking == null){
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Floral", bookingReference);
       return;
     }
   }
 
-  public boolean isBookingValid(String bookingReference){
-    int count = 0;
+  public Booking getBooking(String bookingReference){
     for (Booking booking : bookings){
       if (booking.getBookingReference().equals(bookingReference)){
-        count ++;
+        return booking;
       }
     }
-    if (count == 0){
-      return false;
-    }
-    return true;
+    return null;
   }
 
   public void viewInvoice(String bookingReference) {
