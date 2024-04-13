@@ -9,7 +9,9 @@ public class Booking {
   private String bookingReference;
 
   // Service fields
-  private Catering catering;
+  private Catering cateringService = null;
+  private Floral floralService = null;
+  private Music musicService = null;
 
   public Booking(
       String bookingVenueCode,
@@ -43,6 +45,15 @@ public class Booking {
   }
 
   public void setCatering(Catering catering) {
-    this.catering = catering;
+    cateringService = catering;
   }
+
+  public void setFloral(Floral floral){
+    floralService = floral;
+  }
+
+  public void setMusic(Music music){
+    musicService = music;
+  }
+
 }

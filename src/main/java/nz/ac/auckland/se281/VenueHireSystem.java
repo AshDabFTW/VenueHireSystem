@@ -285,6 +285,10 @@ public class VenueHireSystem {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
       return;
     }
+
+    Music music = new Music();
+    booking.setMusic(music);
+    MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
@@ -293,6 +297,13 @@ public class VenueHireSystem {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Floral", bookingReference);
       return;
     }
+
+    int cost = floralType.getCost();
+    String name = floralType.getName();
+
+    Floral floral = new Floral(cost, name);
+    booking.setFloral(floral);
+    MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Floral (" + name + ")", bookingReference);
   }
 
   public Booking getBooking(String bookingReference){
