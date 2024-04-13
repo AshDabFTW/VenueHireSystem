@@ -345,14 +345,14 @@ public class VenueHireSystem {
         booking.getBookingAttendees(),
         booking.getBookingVenueName());
 
-    // calculate and print costs
+    // initiallising cost values
     int venueCost = booking.getBookingVenueFee();
     int cateringCost = 0;
     int musicCost = 0;
     int floralCost = 0;
 
+    // going through find the costs per service, changing values and printing
     MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(String.valueOf(venueCost));
-
     if (booking.getBookingCatering() != null) {
       Catering catering = booking.getBookingCatering();
       cateringCost = catering.getServiceCost();
@@ -371,6 +371,7 @@ public class VenueHireSystem {
           floral.getFloralType(), String.valueOf(floralCost));
     }
 
+    // calculating and printing total costs
     int totalCost = venueCost + cateringCost + musicCost + floralCost;
     MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(String.valueOf(totalCost));
   }
