@@ -148,7 +148,7 @@ public class VenueHireSystem {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
       return;
     }
-    // check if venue has been made
+    // check if a venue has been made
     if (venues.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
       return;
